@@ -1,44 +1,38 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Load your data
 @st.cache_data
 def load_data():
-    try:
-        df = pd.read_csv("cleaned_dataset.csv")
-    except FileNotFoundError:
-        st.error("The file 'cleaned_dataset.csv' was not found. Please upload it.")
-        return pd.DataFrame()
-    
-    df['Release.Date'] = pd.to_datetime(df['Release.Date'], errors='coerce')
-    df['daysfrommarch'] = (df['Release.Date'] - pd.to_datetime("2025-03-31")).dt.days
-    return df.dropna(subset=['rank', 'price', 'daysfrommarch'])
+    df = pd.read_csv("cleaned_dataset.csv")
+    df['ReleaseDate'] = pd.to_datetime(df['ReleaseDate'], errors='coerce')
+    df['daysfrommarch'] = (df['ReleaseDate'] - pd.to_datetime("2025-03-31")).dt.days
+    df = df.dropna(subset=['rank', 'price', 'daysfrommarch', 'MainColor'])
+    return df
 
 df = load_data()
 
-st.title("Explore Shoe Dataset with Histograms")
+st.title("GOAT Shoe Data Explorer")
 
-if not df.empty:
-    column = st.selectbox(
-        "Choose a column to visualize:",
-        ['price', 'rank', 'daysfrommarch', 'Designer', 'Main.Color', 'Technology', 'Category']
-    )
+# Dropdown to pick a column to visualize
+column_to_plot = st.selectbox(
+    "Select a variable to see its distribution:",
+    ['price', 'rank', 'daysfrommarch', 'Designer', 'MainColor', 'Technology', 'Category']
+)
 
-    st.subheader(f"Histogram of {column}")
+# Plotting
+st.subheader(f"Histogram of {column_to_plot}")
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    
-    if df[column].dtype == 'object':
-        sns.countplot(data=df, x=column, ax=ax, order=df[column].value_counts().index)
-        ax.set_ylabel("Count")
-    else:
-        sns.histplot(df[column], bins=20, kde=True, ax=ax)
-        ax.set_ylabel("Frequency")
-    
-    plt.xticks(rotation=45)
-    st.pyplot(fig)
+fig, ax = plt.subplots(figsize=(10, 5))
+
+if pd.api.types.is_numeric_dtype(df[column_to_plot]):
+    sns.histplot(df[column_to_plot].dropna(), bins=30, kde=True, ax=ax)
 else:
-    st.warning("No data loaded. Please check your CSV file.")
+    # Countplot for categorical variables
+    sns.countplot(x=df[column_to_plot], order=df[column_to_plot].value_counts().index, ax=ax)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+
+st.pyplot(fig)
 
