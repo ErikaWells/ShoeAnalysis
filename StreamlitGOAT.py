@@ -99,6 +99,7 @@ with tab3:
     most_expensive_name = most_expensive_shoe['shoe']
     most_expensive_designer = most_expensive_shoe['Designer']
     most_expensive_color = most_expensive_shoe['MainColor']
+    most_expensive_link = most_expensive_shoe['productlink'] if 'productlink' in most_expensive_shoe and pd.notnull(most_expensive_shoe['productlink']) else "https://GOAT.com"
 
     # Metric 2: Avg Price of Top N Shoes
     avg_price_top = top_shoes_df['price'].mean()
@@ -112,7 +113,8 @@ with tab3:
                     f"<h2 style='color:white;'>Most Expensive Shoe</h2>"  
                     f"<h3 style='color:white; font-size:18px;'>{most_expensive_name}</h3>"  
                     f"<p style='color:white;'>${most_expensive_price}</p>"
-                    f"<p style='color:white;'>by {most_expensive_designer} ({most_expensive_color})</p>"  
+                    f"<p style='color:white;'>by {most_expensive_designer} ({most_expensive_color})</p>"
+                    f"<a href='{most_expensive_link}' target='_blank' style='color:white;'>View on GOAT</a>"
                     f"</div>", unsafe_allow_html=True)
 
     # KPI Card 2 - Average Price of Top N Shoes
@@ -142,4 +144,5 @@ with tab3:
                     f"<p><b>Price:</b> ${row['price']:.2f} | <b>Designer:</b> {row['Designer']} | <b>Color:</b> {row['MainColor']}</p>"
                     f"<a href='{row['productlink']}' target='_blank'>View on GOAT</a>"
                     f"</div>", unsafe_allow_html=True)
+
 
