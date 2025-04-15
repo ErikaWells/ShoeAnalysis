@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 @st.cache_data
 def load_data():
     # Replace with your own path or data loading logic
-    df = pd.read_csv("goatdata.csv")
+    df = pd.read_csv("/STAT386/ShoeAnalysis/cleaned_dataset.csv")
     df['Release.Date'] = pd.to_datetime(df['Release.Date'], errors='coerce')
     df['daysfrommarch'] = (df['Release.Date'] - pd.to_datetime("2025-03-31")).dt.days
     df = df.dropna(subset=['rank', 'price', 'daysfrommarch'])
