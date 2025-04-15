@@ -85,7 +85,7 @@ with tab3:
     st.subheader("🏆 KPI Summary")
 
     # Select Top N Shoes
-    top_n = st.selectbox("Choose Top N Shoes", [10, 20, 50, 100, 182], index=0)
+    top_n = st.selectbox("Choose Top # of Shoes", [10, 20, 50, 100, 182], index=0)
 
     # Create a fun, colorful column layout for KPI Cards
     kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
@@ -99,7 +99,7 @@ with tab3:
     most_expensive_name = most_expensive_shoe['shoe']
     most_expensive_designer = most_expensive_shoe['Designer']
     most_expensive_color = most_expensive_shoe['MainColor']
-    most_expensive_link = most_expensive_shoe['productlink']
+    most_expensive_link = most_expensive_shoe['productlink'] if pd.notnull(most_expensive_shoe['productlink']) else "https://defaultlink.com"
 
     # Metric 2: Avg Price of Top N Shoes
     avg_price_top = top_shoes_df['price'].mean()
@@ -144,3 +144,4 @@ with tab3:
                     f"<p><b>Price:</b> ${row['price']:.2f} | <b>Designer:</b> {row['Designer']} | <b>Color:</b> {row['MainColor']}</p>"
                     f"<a href='{row['productlink']}' target='_blank'>View on GOAT</a>"
                     f"</div>", unsafe_allow_html=True)
+
