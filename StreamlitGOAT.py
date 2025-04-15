@@ -3,11 +3,11 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Load your data
 @st.cache_data
 def load_data():
     df = pd.read_csv("cleaned_dataset.csv")
     df['ReleaseDate'] = pd.to_datetime(df['ReleaseDate'], errors='coerce')
+    df['Month'] = df['ReleaseDate'].dt.to_period('M').astype(str)
     df['daysfrommarch'] = (df['ReleaseDate'] - pd.to_datetime("2025-03-31")).dt.days
     df = df.dropna(subset=['price', 'daysfrommarch', 'MainColor'])
     return df
@@ -16,7 +16,7 @@ df = load_data()
 
 st.title("GOAT Shoe Data Explorer")
 
-# Define color options
+# Define color palette options
 color_palette = {
     "Default (blue)": "deep",
     "Vibrant (colorful)": "bright",
@@ -25,8 +25,8 @@ color_palette = {
     "Custom Red": ["#e74c3c"]
 }
 
-# Drop unwanted columns
-columns_to_use = [col for col in df.columns if col not in ['rank', 'SKU', 'Nickname']]
+# Drop columns we don't want to include
+columns_to_use = [col for col in df.columns if col not in ['rank', 'SKU', 'Nickname', 'shoe', 'Colorway']]
 
 tab1, tab2 = st.tabs(["📊 Histograms", "📈 Compare Two Variables"])
 
@@ -34,27 +34,40 @@ tab1, tab2 = st.tabs(["📊 Histograms", "📈 Compare Two Variables"])
 with tab1:
     st.subheader("Explore One Variable")
 
-    # Optional filters
-    col1, col2 = st.columns(2)
+    # Filters
+    col1, col2, col3 = st.columns(3)
     with col1:
-        selected_category = st.selectbox("Filter by Category", ["All"] + sorted(df["Category"].dropna().unique()))
+        selected_maincolor = st.selectbox("Filter by Main Color", ["All"] + sorted(df["MainColor"].dropna().unique()))
     with col2:
+        selected_category = st.selectbox("Filter by Category", ["All"] + sorted(df["Category"].dropna().unique()))
+    with col3:
         selected_designer = st.selectbox("Filter by Designer", ["All"] + sorted(df["Designer"].dropna().unique()))
 
-    # Apply filters
+    # Date filter
+    min_date, max_date = df["ReleaseDate"].min(), df["ReleaseDate"].max()
+    date_range = st.date_input("Filter by Release Date Range", [min_date, max_date])
+
     filtered_df = df.copy()
+
+    # Apply filters
+    if selected_maincolor != "All":
+        filtered_df = filtered_df[filtered_df["MainColor"] == selected_maincolor]
     if selected_category != "All":
         filtered_df = filtered_df[filtered_df["Category"] == selected_category]
     if selected_designer != "All":
         filtered_df = filtered_df[filtered_df["Designer"] == selected_designer]
+    if len(date_range) == 2:
+        filtered_df = filtered_df[
+            (filtered_df["ReleaseDate"] >= pd.to_datetime(date_range[0])) &
+            (filtered_df["ReleaseDate"] <= pd.to_datetime(date_range[1]))
+        ]
 
-    # Select variable
+    # Select column to plot
     column_to_plot = st.selectbox(
         "Select a variable to see its distribution:",
-        [col for col in columns_to_use if col not in ['ReleaseDate']]
+        [col for col in columns_to_use if col != 'ReleaseDate']
     )
 
-    # Choose color scheme
     selected_palette = st.selectbox("Choose color scheme:", list(color_palette.keys()))
     sns.set_palette(color_palette[selected_palette])
 
@@ -77,7 +90,6 @@ with tab2:
 
     fig2, ax2 = plt.subplots(figsize=(10, 6))
 
-    # Pick chart type depending on data types
     if pd.api.types.is_numeric_dtype(df[x_var]) and pd.api.types.is_numeric_dtype(df[y_var]):
         sns.scatterplot(x=df[x_var], y=df[y_var], ax=ax2)
     elif pd.api.types.is_categorical_dtype(df[x_var]) or df[x_var].dtype == "object":
@@ -89,5 +101,6 @@ with tab2:
 
     ax2.set_title(f"{y_var} vs {x_var}")
     st.pyplot(fig2)
+
 
 
