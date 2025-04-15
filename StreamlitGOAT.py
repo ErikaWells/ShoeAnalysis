@@ -82,67 +82,64 @@ with tab2:
 
 # --------------------- TAB 3: KPI DASHBOARD ---------------------
 with tab3:
-    st.subheader("🏆 KPI Summary")
-
-    # Select Top N Shoes
-    top_n = st.selectbox("Choose Top # of Shoes", [10, 20, 50, 100, 182], index=0)
-
-    # Create a fun, colorful column layout for KPI Cards
-    kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
-
-    # Filter Data based on top N
-    top_shoes_df = df.head(top_n)
-
-    # Metric 1: Most Expensive Shoe by Rank
-    most_expensive_shoe = top_shoes_df.loc[top_shoes_df['price'].idxmax()]
-    most_expensive_price = most_expensive_shoe['price']
-    most_expensive_name = most_expensive_shoe['shoe']
-    most_expensive_designer = most_expensive_shoe['Designer']
-    most_expensive_color = most_expensive_shoe['MainColor']
-    most_expensive_link = most_expensive_shoe['productlink'] if 'productlink' in most_expensive_shoe and pd.notnull(most_expensive_shoe['productlink']) else "https://GOAT.com"
-
-    # Metric 2: Avg Price of Top N Shoes
-    avg_price_top = top_shoes_df['price'].mean()
-
-    # Metric 3: Avg Rank of Top N Shoes
-    avg_rank_top = top_shoes_df['rank'].mean()
-
-    # KPI Card 1 - Most Expensive Shoe
-    with kpi_col1:
-        st.markdown(f"<div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<h2 style='color:white;'>Most Expensive Shoe</h2>"  
-                    f"<h3 style='color:white; font-size:18px;'>{most_expensive_name}</h3>"  
-                    f"<p style='color:white;'>${most_expensive_price}</p>"
-                    f"<p style='color:white;'>by {most_expensive_designer} ({most_expensive_color})</p>"
-                    f"<a href='{most_expensive_link}' target='_blank' style='color:white;'>View on GOAT</a>"
-                    f"</div>", unsafe_allow_html=True)
-
-    # KPI Card 2 - Average Price of Top N Shoes
-    with kpi_col2:
-        st.markdown(f"<div style='background-color:#56B4D3; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<h3 style='color:white;'>${avg_price_top:.2f}</h3>"
-                    f"<p style='color:white;'>Average Price of Top {top_n} Shoes</p>"
-                    f"</div>", unsafe_allow_html=True)
-
-    # KPI Card 3 - Average Rank of Top N Shoes
-    with kpi_col3:
-        st.markdown(f"<div style='background-color:#D9BF77; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<h3 style='color:white;'>{avg_rank_top:.2f}</h3>"
-                    f"<p style='color:white;'>Average Rank of Top {top_n} Shoes</p>"
-                    f"</div>", unsafe_allow_html=True)
-
-    # Section 2: List Top N Shoes with Details
-    st.subheader(f"🔥 Top {top_n} Shoes")
-
-    # Create a table to show shoe details
-    top_shoes_df = top_shoes_df[['rank', 'shoe', 'price', 'Designer', 'MainColor', 'SKU', 'productlink']]
-
-    # Show top N shoes with links
-    for index, row in top_shoes_df.iterrows():
-        st.markdown(f"<div style='background-color:#F1F3F4; border-radius:8px; padding:10px; margin-bottom:10px;'>"
-                    f"<h4>{row['rank']}. {row['shoe']}</h4>"
-                    f"<p><b>Price:</b> ${row['price']:.2f} | <b>Designer:</b> {row['Designer']} | <b>Color:</b> {row['MainColor']}</p>"
-                    f"<a href='{row['productlink']}' target='_blank'>View on GOAT</a>"
-                    f"</div>", unsafe_allow_html=True)
+     st.subheader("🏆 KPI Summary")
+ 
+     # Select Top N Shoes
+     top_n = st.selectbox("Choose Top N Shoes", [10, 20, 50, 100, 182], index=0)
+ 
+     # Create a fun, colorful column layout for KPI Cards
+     kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
+ 
+     # Filter Data based on top N
+     top_shoes_df = df.head(top_n)
+ 
+     # Metric 1: Most Expensive Shoe by Rank
+     most_expensive_shoe = top_shoes_df.loc[top_shoes_df['price'].idxmax()]
+     most_expensive_price = most_expensive_shoe['price']
+     most_expensive_name = most_expensive_shoe['shoe']
+     most_expensive_designer = most_expensive_shoe['Designer']
+     most_expensive_color = most_expensive_shoe['MainColor']
+ 
+     # Metric 2: Avg Price of Top N Shoes
+     avg_price_top = top_shoes_df['price'].mean()
+ 
+     # Metric 3: Avg Rank of Top N Shoes
+     avg_rank_top = top_shoes_df['rank'].mean()
+ 
+     # KPI Card 1 - Most Expensive Shoe
+     with kpi_col1:
+         st.markdown(f"<div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>"
+                     f"<h3 style='color:white;'>{most_expensive_name}</h3>"
+                     f"<p style='color:white;'>Most Expensive Shoe<br><b>${most_expensive_price}</b><br>by {most_expensive_designer} ({most_expensive_color})</p>"
+                     f"<a href='https://www.goat.com/sneakers/{most_expensive_shoe['SKU']}' target='_blank' style='color:white;'>View on GOAT</a>"
+                     f"</div>", unsafe_allow_html=True)
+ 
+     # KPI Card 2 - Average Price of Top N Shoes
+     with kpi_col2:
+         st.markdown(f"<div style='background-color:#56B4D3; padding:10px; border-radius:8px; text-align:center;'>"
+                     f"<h3 style='color:white;'>${avg_price_top:.2f}</h3>"
+                     f"<p style='color:white;'>Average Price of Top {top_n} Shoes</p>"
+                     f"</div>", unsafe_allow_html=True)
+ 
+     # KPI Card 3 - Average Rank of Top N Shoes
+     with kpi_col3:
+         st.markdown(f"<div style='background-color:#D9BF77; padding:10px; border-radius:8px; text-align:center;'>"
+                     f"<h3 style='color:white;'>{avg_rank_top:.2f}</h3>"
+                     f"<p style='color:white;'>Average Rank of Top {top_n} Shoes</p>"
+                     f"</div>", unsafe_allow_html=True)
+ 
+     # Section 2: List Top N Shoes with Details
+     st.subheader(f"🔥 Top {top_n} Shoes")
+ 
+     # Create a table to show shoe details
+     top_shoes_df = top_shoes_df[['rank', 'shoe', 'price', 'Designer', 'MainColor', 'SKU']]
+ 
+     # Show top N shoes with links
+     for index, row in top_shoes_df.iterrows():
+         st.markdown(f"<div style='background-color:#F1F3F4; border-radius:8px; padding:10px; margin-bottom:10px;'>"
+                     f"<h4>{row['rank']}. {row['shoe']}</h4>"
+                     f"<p><b>Price:</b> ${row['price']:.2f} | <b>Designer:</b> {row['Designer']} | <b>Color:</b> {row['MainColor']}</p>"
+                     f"<a href='https://www.goat.com/sneakers/{row['SKU']}' target='_blank'>View on GOAT</a>"
+                     f"</div>", unsafe_allow_html=True)
 
 
