@@ -99,7 +99,7 @@ with tab3:
     most_expensive_name = most_expensive_shoe['shoe']
     most_expensive_designer = most_expensive_shoe['Designer']
     most_expensive_color = most_expensive_shoe['MainColor']
-    most_expensive_link = most_expensive_shoe['productlink'] if pd.notnull(most_expensive_shoe['productlink']) else "https://defaultlink.com"
+    most_expensive_link = most_expensive_shoe['productlink'] if pd.notnull(most_expensive_shoe['productlink']) else "https://GOAT.com"
 
     # Metric 2: Avg Price of Top N Shoes
     avg_price_top = top_shoes_df['price'].mean()
@@ -110,11 +110,11 @@ with tab3:
     # KPI Card 1 - Most Expensive Shoe
     with kpi_col1:
         st.markdown(f"<div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<h2 style='color:white;'>Most Expensive Shoe</h2>"  # Added title here
-                    f"<h3 style='color:white; font-size:18px;'>{most_expensive_name}</h3>"  # Smaller shoe name
+                    f"<h2 style='color:white;'>Most Expensive Shoe</h2>"  
+                    f"<h3 style='color:white; font-size:18px;'>{most_expensive_name}</h3>"  
                     f"<p style='color:white;'>${most_expensive_price}</p>"
                     f"<p style='color:white;'>by {most_expensive_designer} ({most_expensive_color})</p>"
-                    f"<a href='{most_expensive_link}' target='_blank' style='color:white;'>View on GOAT</a>"  # Link from productlink column
+                    f"<a href='{most_expensive_link}' target='_blank' style='color:white;'>View on GOAT</a>"  
                     f"</div>", unsafe_allow_html=True)
 
     # KPI Card 2 - Average Price of Top N Shoes
