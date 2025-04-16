@@ -25,13 +25,13 @@ tab1, tab2, tab3 = st.tabs(["🏆 KPI Dashboard", "📊 Histograms", "📈 Compa
 with tab1:
     st.subheader("🏆 KPI Summary")
 
-    # Select Top N Shoes
+    # select top shoes
     top_n = st.selectbox("Choose # of Top Shoes", [10, 20, 50, 100, 182], index=0)
 
-    # Create a fun, colorful column layout for KPI Cards
+    # Create KPI card layouts 
     kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
 
-    # Filter Data based on top N
+    # filter based on top 
     top_shoes_df = df.head(top_n)
 
     # Metric 1: Most Expensive Shoe by Rank
