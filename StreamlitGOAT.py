@@ -107,29 +107,36 @@ with tab3:
     # Metric 3: Avg Rank of Top N Shoes
     avg_rank_top = top_shoes_df['rank'].mean()
 
-    # KPI Card 1 - Most Expensive Shoe
+# KPI card 1 
     with kpi_col1:
-        st.markdown(f"<div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<p style='color:white;'>Most Expensive Shoe<br><b>${most_expensive_price}</b><br>by {most_expensive_designer} ({most_expensive_color})</p>"
-                    f"<h3 style='color:white;'>{most_expensive_name}</h3>"
-                    f"<a href='{most_expensive_shoe['productlink']}' target='_blank' style='color:white;'>View on GOAT</a>"
-                    f"</div>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>
+            <h2 style='color:white; margin-bottom:10px;'>Most Expensive Shoe</h2>
+            <p style='color:white; font-size:18px; margin:0;'><b>{most_expensive_name}</b></p>
+            <p style='color:white; font-size:16px; margin:0;'>${most_expensive_price} by {most_expensive_designer} ({most_expensive_color})</p>
+            <a href='{most_expensive_shoe['productlink']}' target='_blank' style='color:white; text-decoration:underline;'>View on GOAT</a>
+        </div>
+    """, unsafe_allow_html=True)
 
-    # KPI Card 2 - Average Price of Top N Shoes
+# KPI Card 2 - Average Price of Top N Shoes
     with kpi_col2:
-        st.markdown(f"<div style='background-color:#56B4D3; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<h3 style='color:white;'>${avg_price_top:.2f}</h3>"
-                    f"<p style='color:white;'>Average Price of Top {top_n} Shoes</p>"
-                    f"</div>", unsafe_allow_html=True)
+        st.markdown(f"""
+            <div style='background-color:#56B4D3; padding:10px; border-radius:8px; text-align:center;'>
+                <h2 style='color:white; margin-bottom:10px;'>Average Price of Top {top_n} Shoes</h2>
+                <p style='color:white; font-size:22px;'>${avg_price_top:.2f}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    # KPI Card 3 - Most Popular Color of Top N Shoes
+# KPI Card 3 - Most Popular Color of Top N Shoes
     most_popular_color = top_shoes_df['MainColor'].mode()[0]
-
+    
     with kpi_col3:
-        st.markdown(f"<div style='background-color:#D9BF77; padding:10px; border-radius:8px; text-align:center;'>"
-                    f"<h3 style='color:white;'>{most_popular_color}</h3>"
-                    f"<p style='color:white;'>Most Popular Color in Top {top_n} Shoes</p>"
-                    f"</div>", unsafe_allow_html=True)
+        st.markdown(f"""
+            <div style='background-color:#D9BF77; padding:10px; border-radius:8px; text-align:center;'>
+                <h2 style='color:white; margin-bottom:10px;'>Most Popular Color in Top {top_n} Shoes</h2>
+                <p style='color:white; font-size:22px;'>{most_popular_color}</p>
+            </div>
+        """, unsafe_allow_html=True)# KPI Card 1 - Most Expensive Shoe
 
 
     # Section 2: List Top N Shoes with Details
