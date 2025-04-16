@@ -85,7 +85,7 @@ with tab3:
      st.subheader("🏆 KPI Summary")
  
      # Select Top N Shoes
-     top_n = st.selectbox("Choose Top N Shoes", [10, 20, 50, 100, 182], index=0)
+     top_n = st.selectbox("Choose # of Top Shoes", [10, 20, 50, 100, 182], index=0)
  
      # Create a fun, colorful column layout for KPI Cards
      kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
@@ -99,7 +99,8 @@ with tab3:
      most_expensive_name = most_expensive_shoe['shoe']
      most_expensive_designer = most_expensive_shoe['Designer']
      most_expensive_color = most_expensive_shoe['MainColor']
- 
+
+    
      # Metric 2: Avg Price of Top N Shoes
      avg_price_top = top_shoes_df['price'].mean()
  
@@ -111,7 +112,6 @@ with tab3:
          st.markdown(f"<div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>"
                      f"<h3 style='color:white;'>{most_expensive_name}</h3>"
                      f"<p style='color:white;'>Most Expensive Shoe<br><b>${most_expensive_price}</b><br>by {most_expensive_designer} ({most_expensive_color})</p>"
-                     f"<a href='https://www.goat.com/sneakers/{most_expensive_shoe['SKU']}' target='_blank' style='color:white;'>View on GOAT</a>"
                      f"</div>", unsafe_allow_html=True)
  
      # KPI Card 2 - Average Price of Top N Shoes
@@ -132,14 +132,14 @@ with tab3:
      st.subheader(f"🔥 Top {top_n} Shoes")
  
      # Create a table to show shoe details
-     top_shoes_df = top_shoes_df[['rank', 'shoe', 'price', 'Designer', 'MainColor', 'SKU']]
+     top_shoes_df = top_shoes_df[['rank', 'shoe', 'price', 'Designer', 'MainColor']]
  
      # Show top N shoes with links
      for index, row in top_shoes_df.iterrows():
          st.markdown(f"<div style='background-color:#F1F3F4; border-radius:8px; padding:10px; margin-bottom:10px;'>"
                      f"<h4>{row['rank']}. {row['shoe']}</h4>"
                      f"<p><b>Price:</b> ${row['price']:.2f} | <b>Designer:</b> {row['Designer']} | <b>Color:</b> {row['MainColor']}</p>"
-                     f"<a href='https://www.goat.com/sneakers/{row['SKU']}' target='_blank'>View on GOAT</a>"
+                     f"<a href='{row['productlink']}' target='_blank'>View on GOAT</a>"
                      f"</div>", unsafe_allow_html=True)
 
 
