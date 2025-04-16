@@ -107,7 +107,7 @@ with tab3:
     # Metric 3: Avg Rank of Top N Shoes
     avg_rank_top = top_shoes_df['rank'].mean()
 
-# KPI card 1 
+    # KPI card 1 
     with kpi_col1:
     st.markdown(f"""
         <div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>
@@ -118,7 +118,7 @@ with tab3:
         </div>
     """, unsafe_allow_html=True)
 
-# KPI Card 2 - Average Price of Top N Shoes
+    # KPI Card 2 - Average Price of Top N Shoes
     with kpi_col2:
         st.markdown(f"""
             <div style='background-color:#56B4D3; padding:10px; border-radius:8px; text-align:center;'>
@@ -127,7 +127,7 @@ with tab3:
             </div>
         """, unsafe_allow_html=True)
 
-# KPI Card 3 - Most Popular Color of Top N Shoes
+    # KPI Card 3 - Most Popular Color of Top N Shoes
     most_popular_color = top_shoes_df['MainColor'].mode()[0]
     
     with kpi_col3:
