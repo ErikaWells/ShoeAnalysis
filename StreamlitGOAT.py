@@ -109,14 +109,14 @@ with tab3:
 
     # KPI card 1 
     with kpi_col1:
-    st.markdown(f"""
-        <div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>
-            <h2 style='color:white; margin-bottom:10px;'>Most Expensive Shoe</h2>
-            <p style='color:white; font-size:18px; margin:0;'><b>{most_expensive_name}</b></p>
-            <p style='color:white; font-size:16px; margin:0;'>${most_expensive_price} by {most_expensive_designer} ({most_expensive_color})</p>
-            <a href='{most_expensive_shoe['productlink']}' target='_blank' style='color:white; text-decoration:underline;'>View on GOAT</a>
-        </div>
-    """, unsafe_allow_html=True)
+        st.markdown(f"""
+            <div style='background-color:#FF6F61; padding:10px; border-radius:8px; text-align:center;'>
+                <h2 style='color:white; margin-bottom:10px;'>Most Expensive Shoe</h2>
+                <p style='color:white; font-size:18px; margin:0;'><b>{most_expensive_name}</b></p>
+                <p style='color:white; font-size:16px; margin:0;'>${most_expensive_price} by {most_expensive_designer} ({most_expensive_color})</p>
+                <a href='{most_expensive_shoe['productlink']}' target='_blank' style='color:white; text-decoration:underline;'>View on GOAT</a>
+            </div>
+        """, unsafe_allow_html=True)
 
     # KPI Card 2 - Average Price of Top N Shoes
     with kpi_col2:
