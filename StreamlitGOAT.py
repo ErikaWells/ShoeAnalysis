@@ -16,7 +16,7 @@ df = load_data()
 st.title("Top Shoes This March")
 
 # Drop columns
-columns_to_use = [col for col in df.columns if col not in ['rank', 'SKU', 'Nickname', 'shoe', 'Colorway', 'ReleaseDate']]
+columns_to_use = [col for col in df.columns if col not in ['SKU', 'Nickname', 'shoe', 'Colorway', 'ReleaseDate']]
 
 
 tab1, tab2, tab3 = st.tabs(["🏆 KPI Dashboard", "📊 Histograms", "📈 Compare Two Variables"])
