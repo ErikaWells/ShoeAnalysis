@@ -123,7 +123,7 @@ with tab3:
                     f"</div>", unsafe_allow_html=True)
 
     # KPI Card 3 - Most Popular Color of Top N Shoes
-most_popular_color = top_shoes_df['MainColor'].mode()[0]
+    most_popular_color = top_shoes_df['MainColor'].mode()[0]
 
     with kpi_col3:
         st.markdown(f"<div style='background-color:#D9BF77; padding:10px; border-radius:8px; text-align:center;'>"
